@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="vehiclePage">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet"> 
+    <link href="assets/css/styles.css" rel="stylesheet"> 
+
+    <script src="node_modules/angular/angular.js"></script>
+    <script src="app/app.js"></script>
+    <script src="app/services.js"></script>
+
+    <title>NPT Test</title>
+</head>
+<body ng-controller="vehicleController">
+    <div class="row" style="margin: 0px;">
+        <div class="col-8 left-div">
+            <h1>Vehicles List</h1>
+            <table class="table table-striped" style="margin-top: 20px;">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">E. Displacement</th>
+                    <th scope="col">E. Power</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Location</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="vehicle in vehicles">
+                    <th scope="row">{{ vehicle.vehicle_id }}</th>
+                    <td>{{ vehicle.name }}</td>
+                    <td>{{ vehicle.engine_displacement }}</td>
+                    <td>{{ vehicle.engine_power }}</td>
+                    <td>{{ vehicle.price | currency: '&#8369;' }}</td>
+                    <td>{{ vehicle.location }}</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+        <div class="col-4 right-div">
+            <h3 style="margin-bottom: 20px;">New Vehicle</h3>
+            <form name="vehicleForm">
+                <input type="text" class="form-control" placeholder="Vehicle name" ng-model="vehicle.name" name="name" ng-required="true" capitalize>
+                <div style="color: rgb(248, 0, 0);" ng-show="vehicleForm.name.$touched && vehicleForm.name.$invalid">
+                    <small>Enter a valid vehicle name</small>
+                </div>
+                <input type="text" class="form-control" placeholder="Engine displacement (i.e 1L, 1.6L, 1200cc)" ng-model="vehicle.engine_displacement" name="engine_displacement" ng-required="true" capitalize>
+                <div style="color: rgb(248, 0, 0);" ng-show="vehicleForm.engine_displacement.$touched && vehicleForm.engine_displacement.$invalid">
+                    <small>Enter a valid engine displacement (i.e 1L, 900cc, etc)</small>
+                </div>
+                <input type="number" class="form-control" placeholder="Engine power in bhp" ng-model="vehicle.engine_power" name="engine_power" ng-required="true">
+                <div style="color: rgb(248, 0, 0);" ng-show="vehicleForm.engine_power.$touched && vehicleForm.engine_power.$invalid">
+                    <small>Enter a valid engine power in bhp</small>
+                </div>
+                <input type="number" class="form-control" placeholder="Price" ng-model="vehicle.price" name="price" ng-required="true">
+                <div style="color: rgb(248, 0, 0);" ng-show="vehicleForm.price.$touched && vehicleForm.price.$invalid">
+                    <small>Enter a valid price for this vehicle</small>
+                </div>
+                <input type="text" class="form-control" placeholder="Location" ng-model="vehicle.location" name="location" ng-required="true" capitalize>
+                <div style="color: rgb(248, 0, 0);" ng-show="vehicleForm.location.$touched && vehicleForm.location.$invalid">
+                    <small>Enter a valid location</small>
+                </div>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 10px;" ng-disabled="vehicleForm.$invalid" ng-click="saveVehicle(vehicle)">Save Vehicle</button>
+                <!-- <input type="submit" class="btn btn-primary" style="width: 100%;"> -->
+            </form>
+        </div>
+    </div>
+    <div class="overlay" ng-show="load">
+        <img src="assets/img/spinner.gif" style="margin-top: 220px;"/>
+    </div>
+</body>
+</html>
